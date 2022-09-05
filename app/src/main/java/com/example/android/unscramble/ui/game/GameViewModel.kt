@@ -15,13 +15,17 @@ class GameViewModel : ViewModel() {
     val currentWordCount : Int
         get() = _currentWordCount
 
-    private var _currentScrambledWord = "test"
+    private lateinit var _currentScrambledWord : String
 
     val currentScrambleWord : String
         get() = _currentScrambledWord
 
+    private var wordsList : MutableList<String> = mutableListOf()
+    private lateinit var currentWord : String
+
     init{
         Log.d("GameFragment", "GamveViewModel created!")
+        getNextWord()
     }
 
     override fun onCleared(){
@@ -29,4 +33,27 @@ class GameViewModel : ViewModel() {
         Log.d("GameFragment","GameViewModel destroyed!")
     }
 
+    private fun getNextWord() {
+        currentWord = allWordsList.random()
+
+        if(wordsList.contains(currentWord)){
+            getNextWord()
+        } else{
+            val tempWord = currentWord.toCharArray()
+            while(String(tempWord).equals(currentWord,false)){
+                tempWord.shuffle()
+            }
+            _currentScrambledWord = String(tempWord)
+            ++_currentWordCount
+            wordsList.add(currentWord)
+        }
+
+    }
+
+    fun nextWord() : Boolean {
+        return if (currentWordCount < MAX_NO_OF_WORDS ) {
+            getNextWord()
+            true
+        } else false
+    }
 }
