@@ -60,10 +60,14 @@ class GameFragment : Fragment() {
         binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener { onSkipWord() }
         // Update the UI
-        updateNextWordOnScreen()
+        //updateNextWordOnScreen()
         binding.score.text = getString(R.string.score, 0)
         binding.wordCount.text = getString(
                 R.string.word_count, 0, MAX_NO_OF_WORDS)
+        viewModel.currentScrambleWord.observe(viewLifecycleOwner,{
+            newWord ->
+            binding.textViewUnscrambledWord.text = newWord
+        })
     }
 
     /*
@@ -74,11 +78,11 @@ class GameFragment : Fragment() {
         val playerWord = binding.textInputEditText.text.toString()
         if( viewModel.isUserWordCorrect(playerWord)) {
             setErrorTextField(false)
-            if (viewModel.nextWord()) {
-                updateNextWordOnScreen()
-            } else {
+            if (!viewModel.nextWord()) {
                 showFinalScoreDialog()
-            }
+            } /*else {
+                //updateNextWordOnScreen()
+            }*/
         }else{
             setErrorTextField(true)
         }
@@ -99,7 +103,7 @@ class GameFragment : Fragment() {
     private fun onSkipWord() {
         if(viewModel.nextWord()){
             setErrorTextField(false)
-            updateNextWordOnScreen()
+            //updateNextWordOnScreen()
         }else{
             showFinalScoreDialog()
         }
@@ -127,7 +131,7 @@ class GameFragment : Fragment() {
     private fun restartGame() {
         viewModel.reinitializeData()
         setErrorTextField(false)
-        updateNextWordOnScreen()
+        //updateNextWordOnScreen()
     }
 
     /*
@@ -148,13 +152,6 @@ class GameFragment : Fragment() {
             binding.textField.isErrorEnabled = false
             binding.textInputEditText.text = null
         }
-    }
-
-    /*
-     * Displays the next scrambled word on screen.
-     */
-    private fun updateNextWordOnScreen() {
-        binding.textViewUnscrambledWord.text = viewModel.currentScrambleWord
     }
 
     override fun onDetach() {
