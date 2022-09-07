@@ -68,11 +68,11 @@ class GameFragment : Fragment() {
         //binding.score.text = getString(R.string.score, 0)
         //binding.wordCount.text = getString(
         //        R.string.word_count, 0, MAX_NO_OF_WORDS)
-        viewModel.currentScrambleWord.observe(viewLifecycleOwner,{
+        /*viewModel.currentScrambleWord.observe(viewLifecycleOwner,{
             newWord ->
             binding.textViewUnscrambledWord.text = newWord
-        })
-        viewModel.score.observe(viewLifecycleOwner,{
+        })*/
+        /*viewModel.score.observe(viewLifecycleOwner,{
             newScore ->
             binding.score.text = getString(R.string.score, newScore)
         })
@@ -81,7 +81,7 @@ class GameFragment : Fragment() {
             newWordCount ->
             binding.wordCount.text = getString(R.string.word_count,newWordCount, MAX_NO_OF_WORDS)
 
-        })
+        })*/
         binding.gameViewModel = viewModel
         binding.maxNoOfWords = MAX_NO_OF_WORDS
         binding.lifecycleOwner = viewLifecycleOwner
