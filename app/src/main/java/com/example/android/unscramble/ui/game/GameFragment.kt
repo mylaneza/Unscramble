@@ -82,6 +82,9 @@ class GameFragment : Fragment() {
             binding.wordCount.text = getString(R.string.word_count,newWordCount, MAX_NO_OF_WORDS)
 
         })
+        binding.gameViewModel = viewModel
+        binding.maxNoOfWords = MAX_NO_OF_WORDS
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     /*
