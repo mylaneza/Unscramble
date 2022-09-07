@@ -63,25 +63,6 @@ class GameFragment : Fragment() {
         // Setup a click listener for the Submit and Skip buttons.
         binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener { onSkipWord() }
-        // Update the UI
-        //updateNextWordOnScreen()
-        //binding.score.text = getString(R.string.score, 0)
-        //binding.wordCount.text = getString(
-        //        R.string.word_count, 0, MAX_NO_OF_WORDS)
-        /*viewModel.currentScrambleWord.observe(viewLifecycleOwner,{
-            newWord ->
-            binding.textViewUnscrambledWord.text = newWord
-        })*/
-        /*viewModel.score.observe(viewLifecycleOwner,{
-            newScore ->
-            binding.score.text = getString(R.string.score, newScore)
-        })
-
-        viewModel.currentWordCount.observe(viewLifecycleOwner,{
-            newWordCount ->
-            binding.wordCount.text = getString(R.string.word_count,newWordCount, MAX_NO_OF_WORDS)
-
-        })*/
         binding.gameViewModel = viewModel
         binding.maxNoOfWords = MAX_NO_OF_WORDS
         binding.lifecycleOwner = viewLifecycleOwner
@@ -97,20 +78,10 @@ class GameFragment : Fragment() {
             setErrorTextField(false)
             if (!viewModel.nextWord()) {
                 showFinalScoreDialog()
-            } /*else {
-                //updateNextWordOnScreen()
-            }*/
+            }
         }else{
             setErrorTextField(true)
         }
-
-        /*currentScrambledWord = getNextScrambledWord()
-        currentWordCount++
-        score += SCORE_INCREASE
-        binding.wordCount.text = getString(R.string.word_count, currentWordCount, MAX_NO_OF_WORDS)
-        binding.score.text = getString(R.string.score, score)
-        setErrorTextField(false)
-        updateNextWordOnScreen()*/
     }
 
     /*
@@ -124,21 +95,6 @@ class GameFragment : Fragment() {
         }else{
             showFinalScoreDialog()
         }
-
-       /* currentScrambledWord = getNextScrambledWord()
-        currentWordCount++
-        binding.wordCount.text = getString(R.string.word_count, currentWordCount, MAX_NO_OF_WORDS)
-        setErrorTextField(false)
-        updateNextWordOnScreen()*/
-    }
-
-    /*
-     * Gets a random word for the list of words and shuffles the letters in it.
-     */
-    private fun getNextScrambledWord(): String {
-        val tempWord = allWordsList.random().toCharArray()
-        tempWord.shuffle()
-        return String(tempWord)
     }
 
     /*
@@ -148,7 +104,6 @@ class GameFragment : Fragment() {
     private fun restartGame() {
         viewModel.reinitializeData()
         setErrorTextField(false)
-        //updateNextWordOnScreen()
     }
 
     /*
@@ -169,11 +124,6 @@ class GameFragment : Fragment() {
             binding.textField.isErrorEnabled = false
             binding.textInputEditText.text = null
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("GameFragment","GameFragment destroyed!")
     }
 
     private fun showFinalScoreDialog(){
